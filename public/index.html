@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mining Machine Monitoring and Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+</head>
+<body class="bg-light">
+    <header class="bg-dark text-white text-center py-4">
+        <h1>Mining Machine Monitoring and Management System</h1>
+    </header>
+    <div class="container mt-4">
+        <section class="row text-center">
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm">Total Machines: <span id="total">0</span></div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm">On-rack: <span id="on-rack">0</span></div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm">Off-rack: <span id="off-rack">0</span></div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3 shadow-sm">Under Repair: <span id="repair">0</span></div>
+            </div>
+        </section>
+        <section class="text-center my-4">
+            <input type="text" id="search" class="form-control w-50 d-inline" placeholder="Search IP, Model, or Status">
+            <button id="search-btn" class="btn btn-success ms-2">Search</button>
+        </section>
+        <section class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>IP Address</th>
+                        <th>Seat</th>
+                        <th>Model</th>
+                        <th>Working Mode</th>
+                        <th>Local Hashrate</th>
+                        <th>Status</th>
+                        <th>Hashboard Status</th>
+                        <th>Temperature</th>
+                        <th>Fan Speed</th>
+                        <th>Customer</th>
+                        <th>Mining Pool</th>
+                    </tr>
+                </thead>
+                <tbody id="machine-list">
+                </tbody>
+            </table>
+        </section>
+        <section class="text-center my-4">
+            <h2>Manage Mining Machines</h2>
+            <button id="add-machine" class="btn btn-primary m-2">Add Machine</button>
+            <button id="update-machine" class="btn btn-warning m-2">Update Machine</button>
+            <button id="delete-machine" class="btn btn-danger m-2">Delete Machine</button>
+        </section>
+    </div>
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; 2025 Mining Machine Monitoring System</p>
+    </footer>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+
+
+
