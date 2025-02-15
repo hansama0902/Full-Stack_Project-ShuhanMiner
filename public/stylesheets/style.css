@@ -12,7 +12,8 @@ header {
   padding: 1.5rem;
 }
 
-h1, h2 {
+h1,
+h2 {
   margin: 20px 0;
   text-align: center;
 }
@@ -127,4 +128,3 @@ footer {
   color: white;
   margin-top: 20px;
 }
-
