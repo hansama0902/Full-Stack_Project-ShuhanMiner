@@ -1,0 +1,68 @@
+[
+    {
+      "ip_address": "192.168.1.101",
+      "seat": "A1",
+      "model": "S19",
+      "working_mode": "Normal",
+      "local_hashrate": 110000,
+      "status": "Online",
+      "hashboard_status": 120,
+      "temperature": 45,
+      "fan_speed": 3200,
+      "customer": "Customer_1",
+      "mining_pool": "Pool_A"
+    },
+    {
+      "ip_address": "192.168.1.102",
+      "seat": "A2",
+      "model": "T19",
+      "working_mode": "Eco",
+      "local_hashrate": 90000,
+      "status": "Online",
+      "hashboard_status": 115,
+      "temperature": 50,
+      "fan_speed": 3100,
+      "customer": "Customer_2",
+      "mining_pool": "Pool_B"
+    },
+    {
+      "ip_address": "192.168.1.103",
+      "seat": "A3",
+      "model": "S17",
+      "working_mode": "Overclock",
+      "local_hashrate": 130000,
+      "status": "Offline",
+      "hashboard_status": 130,
+      "temperature": 55,
+      "fan_speed": 3400,
+      "customer": "Customer_3",
+      "mining_pool": "Pool_C"
+    },
+    {
+      "ip_address": "192.168.1.104",
+      "seat": "A4",
+      "model": "S19 Pro",
+      "working_mode": "High Performance",
+      "local_hashrate": 140000,
+      "status": "Online",
+      "hashboard_status": 140,
+      "temperature": 48,
+      "fan_speed": 3500,
+      "customer": "Customer_4",
+      "mining_pool": "Pool_A"
+    },
+    {
+      "ip_address": "192.168.1.105",
+      "seat": "A5",
+      "model": "T17",
+      "working_mode": "Normal",
+      "local_hashrate": 95000,
+      "status": "Offline",
+      "hashboard_status": 110,
+      "temperature": 60,
+      "fan_speed": 3000,
+      "customer": "Customer_5",
+      "mining_pool": "Pool_B"
+    }
+  ]
+  
