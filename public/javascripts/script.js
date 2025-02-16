@@ -39,6 +39,29 @@ function attachEventListeners() {
             
         });
     });
+    document.getElementById('add-machine-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const newMiner = {
+        ip: document.getElementById('ip').value,
+        seat: document.getElementById('seat').value,
+        model: document.getElementById('model').value,
+        workingMode: document.getElementById('workingMode').value,
+        hashrate: document.getElementById('hashrate').value,
+        status: document.getElementById('status').value,
+        hashboardStatus: document.getElementById('hashboardStatus').value,
+        temperature: document.getElementById('temperature').value,
+        fanSpeed: document.getElementById('fanSpeed').value,
+        customer: document.getElementById('customer').value,
+        miningPool: document.getElementById('miningPool').value
+    };
+    await fetch('/api/miners', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMiner)
+    });
+    fetchMiners();
+    document.getElementById('add-machine-form').reset();
+});
     document.querySelectorAll('.edit-machine').forEach(button => {
         button.addEventListener('click', async (event) => {
             const ip = event.target.getAttribute('data-ip');
@@ -63,3 +86,27 @@ document.getElementById('search-btn').addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', fetchMiners);
+// add-machine
+document.getElementById('add-machine-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const newMiner = {
+        ip: document.getElementById('ip').value,
+        seat: document.getElementById('seat').value,
+        model: document.getElementById('model').value,
+        workingMode: document.getElementById('workingMode').value,
+        hashrate: document.getElementById('hashrate').value,
+        status: document.getElementById('status').value,
+        hashboardStatus: document.getElementById('hashboardStatus').value,
+        temperature: document.getElementById('temperature').value,
+        fanSpeed: document.getElementById('fanSpeed').value,
+        customer: document.getElementById('customer').value,
+        miningPool: document.getElementById('miningPool').value
+    };
+    await fetch('/api/miners', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMiner)
+    });
+    fetchMiners();
+    document.getElementById('add-machine-form').reset();
+});
