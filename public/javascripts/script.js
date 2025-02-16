@@ -131,7 +131,10 @@ async function fetchMinerDetails() {
     document.getElementById("status").value = miner.status || "";
     document.getElementById("temperature").value = miner.temperature || "";
     document.getElementById("fanSpeed").value = miner.fanSpeed || "";
+    document.getElementById("customer").value = miner.customer || "";
+    document.getElementById("miningPool").value = miner.miningPool || "";
 }
+
 
 // 更新矿机信息
 function attachUpdateListener() {
