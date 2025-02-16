@@ -10,15 +10,45 @@
 
     <h2>Update Mining Machine</h2>
     <form id="update-machine-form">
-        <label>IP Address: <input type="text" id="ip"></label>
-        <label>Seat: <input type="text" id="seat"></label>
-        <label>Model: <input type="text" id="model"></label>
-        <label>Hashrate: <input type="number" id="hashrate"></label>
-        <label>Status: <input type="text" id="status"></label>
-        <label>Temperature: <input type="number" id="temperature"></label>
-        <label>Fan Speed: <input type="number" id="fanSpeed"></label>
-        <button type="submit">Update Machine</button>
+        <table>
+            <tr>
+                <td><label>IP Address:</label></td>
+                <td><input type="text" id="ip" value="N/A"></td>
+                <td><label>Seat:</label></td>
+                <td><input type="text" id="seat" value="N/A"></td>
+            </tr>
+            <tr>
+                <td><label>Model:</label></td>
+                <td><input type="text" id="model" value="N/A"></td>
+                <td><label>Working Mode:</label></td>
+                <td><input type="text" id="workingMode" value="N/A"></td>
+            </tr>
+            <tr>
+                <td><label>Hashrate:</label></td>
+                <td><input type="number" id="hashrate" value="0"></td>
+                <td><label>Status:</label></td>
+                <td><input type="text" id="status" value="N/A"></td>
+            </tr>
+            <tr>
+                <td><label>Hashboard Status:</label></td>
+                <td><input type="text" id="hashboardStatus" value="N/A"></td>
+                <td><label>Temperature:</label></td>
+                <td><input type="number" id="temperature" value="0"></td>
+            </tr>
+            <tr>
+                <td><label>Fan Speed:</label></td>
+                <td><input type="number" id="fanSpeed" value="0"></td>
+                <td><label>Customer:</label></td>
+                <td><input type="text" id="customer" value="N/A"></td>
+            </tr>
+            <tr>
+                <td><label>Mining Pool:</label></td>
+                <td><input type="text" id="miningPool" value="N/A"></td>
+                <td colspan="2"><button type="submit">Update Machine</button></td>
+            </tr>
+        </table>
     </form>
+
     <script type="module" src="./javascripts/script.js"></script>
 </body>
 </html>
