@@ -1,9 +1,25 @@
-// public/javascripts/script.js - 交互逻辑
+// 监听页面加载
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("machine-list")) {
+        fetchMiners();
+        attachFormListener();
+    } else if (document.getElementById("update-machine-form")) {
+        fetchMinerDetails();
+        attachUpdateListener();
+    }
+});
+
+// 获取矿机列表并更新 UI
 async function fetchMiners() {
-    const response = await fetch('/api/miners');
+    const response = await fetch("/api/miners");
     const miners = await response.json();
-    const machineList = document.getElementById('machine-list');
-    machineList.innerHTML = miners.map(m => `
+
+    const machineList = document.getElementById("machine-list");
+    if (!machineList) return;
+
+    machineList.innerHTML = miners
+        .map(
+            (m) => `
         <tr data-id="${m._id}">
             <td>${m.ip}</td>
             <td>${m.seat}</td>
@@ -17,96 +33,136 @@ async function fetchMiners() {
             <td>${m.customer}</td>
             <td>${m.miningPool}</td>
             <td>
-                <button class="btn btn-warning btn-sm edit-machine" data-ip="${m.ip}"> Update</button>
-                <button class="btn btn-danger btn-sm delete-machine" data-ip="${m.ip}">Delete</button>
+                <button class="btn btn-warning btn-sm edit-machine" data-id="${m._id}">Update</button>
+                <button class="btn btn-danger btn-sm delete-machine" data-id="${m._id}">Delete</button>
             </td>
         </tr>
-    `).join('');
+    `
+        )
+        .join("");
+
     attachEventListeners();
 }
 
+// 搜索功能
+document.getElementById("search-btn").addEventListener("click", () => {
+    const query = document.getElementById("search").value.trim().toLowerCase();
+    document.querySelectorAll("#machine-list tr").forEach((row) => {
+        const rowText = row.innerText.trim().toLowerCase();
+        row.style.display = rowText.includes(query) ? "" : "none";
+    });
+});
+
+// 绑定表单提交事件（添加矿机）
+function attachFormListener() {
+    const form = document.getElementById("add-machine-form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const newMiner = {
+            ip: document.getElementById("ip").value,
+            seat: document.getElementById("seat").value,
+            model: document.getElementById("model").value,
+            workingMode: document.getElementById("workingMode").value,
+            hashrate: parseFloat(document.getElementById("hashrate").value),
+            status: document.getElementById("status").value,
+            hashboardStatus: document.getElementById("hashboardStatus").value,
+            temperature: parseFloat(document.getElementById("temperature").value),
+            fanSpeed: parseInt(document.getElementById("fanSpeed").value),
+            customer: document.getElementById("customer").value,
+            miningPool: document.getElementById("miningPool").value,
+        };
+
+        await fetch("/api/miners", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newMiner),
+        });
+
+        fetchMiners();
+        form.reset();
+    });
+}
+
+// 绑定 "Update" 和 "Delete" 按钮
 function attachEventListeners() {
-    document.querySelectorAll('.delete-machine').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            const row = event.target.closest("tr");
-            const minerId = row.getAttribute("data-id"); 
-            if (!minerId) {
-                console.error("Error: minerId is null");
-                return;
-            }    
-            await fetch(`/api/miners/${minerId}`, { method: "DELETE" });
-            fetchMiners();
-            
+    document.querySelectorAll(".edit-machine").forEach((button) => {
+        button.addEventListener("click", (event) => {
+            const minerId = event.target.getAttribute("data-id");
+            if (minerId) window.location.href = `update.html?id=${minerId}`;
         });
     });
-    document.getElementById('add-machine-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const newMiner = {
-        ip: document.getElementById('ip').value,
-        seat: document.getElementById('seat').value,
-        model: document.getElementById('model').value,
-        workingMode: document.getElementById('workingMode').value,
-        hashrate: document.getElementById('hashrate').value,
-        status: document.getElementById('status').value,
-        hashboardStatus: document.getElementById('hashboardStatus').value,
-        temperature: document.getElementById('temperature').value,
-        fanSpeed: document.getElementById('fanSpeed').value,
-        customer: document.getElementById('customer').value,
-        miningPool: document.getElementById('miningPool').value
-    };
-    await fetch('/api/miners', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newMiner)
-    });
-    fetchMiners();
-    document.getElementById('add-machine-form').reset();
-});
-    document.querySelectorAll('.edit-machine').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            const ip = event.target.getAttribute('data-ip');
-            const newIP = prompt('Enter new IP address:', ip);
-            if (newIP && newIP !== ip) {
-                await fetch(`/api/miners/${ip}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newIP })
-                });
-                fetchMiners();
-            }
+
+    document.querySelectorAll(".delete-machine").forEach((button) => {
+        button.addEventListener("click", async (event) => {
+            const minerId = event.target.getAttribute("data-id");
+            if (!minerId || !confirm("⚠️ 确定要删除这台矿机吗？")) return;
+
+            await fetch(`/api/miners/${minerId}`, { method: "DELETE" });
+            fetchMiners();
         });
     });
 }
 
-document.getElementById('search-btn').addEventListener('click', () => {
-    const query = document.getElementById('search').value.toLowerCase();
-    document.querySelectorAll('#machine-list tr').forEach(row => {
-        row.style.display = row.innerText.toLowerCase().includes(query) ? '' : 'none';
-    });
-});
+// 获取矿机详情（update.html）
+async function fetchMinerDetails() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const minerId = urlParams.get("id");
 
-document.addEventListener('DOMContentLoaded', fetchMiners);
-// add-machine
-document.getElementById('add-machine-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const newMiner = {
-        ip: document.getElementById('ip').value,
-        seat: document.getElementById('seat').value,
-        model: document.getElementById('model').value,
-        workingMode: document.getElementById('workingMode').value,
-        hashrate: document.getElementById('hashrate').value,
-        status: document.getElementById('status').value,
-        hashboardStatus: document.getElementById('hashboardStatus').value,
-        temperature: document.getElementById('temperature').value,
-        fanSpeed: document.getElementById('fanSpeed').value,
-        customer: document.getElementById('customer').value,
-        miningPool: document.getElementById('miningPool').value
-    };
-    await fetch('/api/miners', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newMiner)
+    if (!minerId) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    const response = await fetch(`/api/miners/${minerId}`);
+    if (!response.ok) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    const miner = await response.json();
+
+    document.getElementById("ip").value = miner.ip || "";
+    document.getElementById("seat").value = miner.seat || "";
+    document.getElementById("model").value = miner.model || "";
+    document.getElementById("hashrate").value = miner.hashrate || "";
+    document.getElementById("status").value = miner.status || "";
+    document.getElementById("temperature").value = miner.temperature || "";
+    document.getElementById("fanSpeed").value = miner.fanSpeed || "";
+}
+
+// 更新矿机信息
+function attachUpdateListener() {
+    const form = document.getElementById("update-machine-form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const minerId = urlParams.get("id");
+        if (!minerId) return;
+
+        const updatedMiner = {
+            ip: document.getElementById("ip").value.trim(),
+            seat: document.getElementById("seat").value.trim(),
+            model: document.getElementById("model").value.trim(),
+            hashrate: parseFloat(document.getElementById("hashrate").value) || 0,
+            status: document.getElementById("status").value.trim(),
+            temperature: parseFloat(document.getElementById("temperature").value) || 0,
+            fanSpeed: parseInt(document.getElementById("fanSpeed").value) || 0,
+        };
+
+        const response = await fetch(`/api/miners/${minerId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedMiner),
+        });
+
+        if (response.ok) window.location.href = "index.html";
     });
-    fetchMiners();
-    document.getElementById('add-machine-form').reset();
-});
+}
+
+
