@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import minerRoutes from './routes/minerRoutes.js';;
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 // catch 404 and forward to error handler
+app.use('/api/miners', minerRoutes);
 app.use((req, res, next) => {
   next(createError(404));
 });

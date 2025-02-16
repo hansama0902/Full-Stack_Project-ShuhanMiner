@@ -11,77 +11,123 @@
     <link rel="stylesheet" href="./stylesheets/style.css" />
   </head>
   <body class="bg-light">
-    <header class="bg-dark text-white text-center py-4">
-      <h1>Mining Machine Monitoring and Management System</h1>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Mining Management</a>
+        <button class="navbar-toggler" type="button" id="toggle-menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="actions-dropdown">Actions</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="toggle-add-machine">Add New Machine</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="container mt-4">
-      <section class="row text-center">
-        <div class="col-md-3">
-          <div class="card p-3 shadow-sm">
-            Total Machines: <span id="total">0</span>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <input
+            type="text"
+            id="search"
+            class="form-control w-50 d-inline"
+            placeholder="Search IP, Model, or Status"
+          />
+          <button id="search-btn" class="btn btn-success ms-2">Search</button>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <section class="table-responsive">
+            <table class="table table-bordered table-hover text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th>IP Address</th>
+                  <th>Seat</th>
+                  <th>Model</th>
+                  <th>Working Mode</th>
+                  <th>Local Hashrate</th>
+                  <th>Status</th>
+                  <th>Hashboard Status</th>
+                  <th>Temperature</th>
+                  <th>Fan Speed</th>
+                  <th>Customer</th>
+                  <th>Mining Pool</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="machine-list"></tbody>
+            </table>
+          </section>
+        </div>
+      </div>
+      <div class="row mt-4 d-none" id="add-machine-container">
+        <div class="col-md-8 mx-auto">
+          <div class="card shadow p-4">
+            <h4 class="text-center">Add New Machine</h4>
+            <form id="add-machine-form">
+              <div class="mb-3">
+                <label for="ip" class="form-label">IP Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="ip" required>
+              </div>
+              <div class="mb-3">
+                <label for="seat" class="form-label">Seat</label>
+                <input type="text" class="form-control" id="seat">
+              </div>
+              <div class="mb-3">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" id="model">
+              </div>
+              <div class="mb-3">
+                <label for="workingMode" class="form-label">Working Mode</label>
+                <input type="text" class="form-control" id="workingMode">
+              </div>
+              <div class="mb-3">
+                <label for="hashrate" class="form-label">Local Hashrate</label>
+                <input type="text" class="form-control" id="hashrate">
+              </div>
+              <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status">
+                  <option value="Online">Online</option>
+                  <option value="Offline">Offline</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="hashboardStatus" class="form-label">Hashboard Status</label>
+                <input type="text" class="form-control" id="hashboardStatus">
+              </div>
+              <div class="mb-3">
+                <label for="temperature" class="form-label">Temperature</label>
+                <input type="text" class="form-control" id="temperature">
+              </div>
+              <div class="mb-3">
+                <label for="fanSpeed" class="form-label">Fan Speed</label>
+                <input type="text" class="form-control" id="fanSpeed">
+              </div>
+              <div class="mb-3">
+                <label for="customer" class="form-label">Customer</label>
+                <input type="text" class="form-control" id="customer">
+              </div>
+              <div class="mb-3">
+                <label for="miningPool" class="form-label">Mining Pool</label>
+                <input type="text" class="form-control" id="miningPool">
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Add Machine</button>
+            </form>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="card p-3 shadow-sm">
-            On-rack: <span id="on-rack">0</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card p-3 shadow-sm">
-            Off-rack: <span id="off-rack">0</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card p-3 shadow-sm">
-            Under Repair: <span id="repair">0</span>
-          </div>
-        </div>
-      </section>
-      <section class="text-center my-4">
-        <input
-          type="text"
-          id="search"
-          class="form-control w-50 d-inline"
-          placeholder="Search IP, Model, or Status"
-        />
-        <button id="search-btn" class="btn btn-success ms-2">Search</button>
-      </section>
-      <section class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead class="table-dark">
-            <tr>
-              <th>IP Address</th>
-              <th>Seat</th>
-              <th>Model</th>
-              <th>Working Mode</th>
-              <th>Local Hashrate</th>
-              <th>Status</th>
-              <th>Hashboard Status</th>
-              <th>Temperature</th>
-              <th>Fan Speed</th>
-              <th>Customer</th>
-              <th>Mining Pool</th>
-            </tr>
-          </thead>
-          <tbody id="machine-list"></tbody>
-        </table>
-      </section>
-      <section class="text-center my-4">
-        <h2>Manage Mining Machines</h2>
-        <button id="add-machine" class="btn btn-primary m-2">
-          Add Machine
-        </button>
-        <button id="update-machine" class="btn btn-warning m-2">
-          Update Machine
-        </button>
-        <button id="delete-machine" class="btn btn-danger m-2">
-          Delete Machine
-        </button>
-      </section>
+      </div>
     </div>
     <footer class="bg-dark text-white text-center py-3 mt-4">
       <p>&copy; 2025 Mining Machine Monitoring System</p>
     </footer>
-    <script type="module" src="app.js"></script>
+    <script type="module" src="./javascripts/script.js"></script>
+    <script type="module" src="./javascripts/dropdown.js"></script>
   </body>
 </html>
