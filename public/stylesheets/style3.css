@@ -1,29 +1,29 @@
 body {
-    font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 canvas {
-    max-width: 100%;
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    font-weight: bold;
-    margin-bottom: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .card {
-    max-width: 700px;
-    margin: auto;
-    border-radius: 15px;
+  max-width: 700px;
+  margin: auto;
+  border-radius: 15px;
 }
 footer {
-    text-align: center;
-    padding: 15px;
-    background: #343a40;
-    color: white;
-    margin-top: 20px;
-  }
+  text-align: center;
+  padding: 15px;
+  background: #343a40;
+  color: white;
+  margin-top: 20px;
+}

@@ -1,170 +1,177 @@
 // chart.js - Handles fetching data and rendering the chart
 
 async function fetchData() {
-    try {
-        const response = await fetch("/api/prices"); 
-        if (!response.ok) throw new Error("Server returned an error");
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("❌ Failed to fetch data:", error);
-        return [];
-    }
+  try {
+    const response = await fetch('/api/prices');
+    if (!response.ok) throw new Error('Server returned an error');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('❌ Failed to fetch data:', error);
+    return [];
+  }
 }
 
 // 🔹 Function to update the latest price
 async function updateLatestPrice() {
-    const newPrice = prompt("Enter the new electricity price:");
-    if (newPrice === null || isNaN(newPrice)) return alert("Invalid price!");
+  const newPrice = prompt('Enter the new electricity price:');
+  if (newPrice === null || isNaN(newPrice)) return alert('Invalid price!');
 
-    try {
-        const response = await fetch("/api/prices/latest", {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ price: parseFloat(newPrice) })
-        });
+  try {
+    const response = await fetch('/api/prices/latest', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ price: parseFloat(newPrice) }),
+    });
 
-        if (!response.ok) throw new Error("Failed to update price");
+    if (!response.ok) throw new Error('Failed to update price');
 
-        drawChart(); // Refresh chart
-    } catch (error) {
-        console.error("❌ Error updating price:", error);
-    }
+    drawChart(); // Refresh chart
+  } catch (error) {
+    console.error('❌ Error updating price:', error);
+  }
 }
 
 // 🔹 Function to add a new price
 async function addNewPrice() {
-    const newPrice = prompt("Enter the new electricity price:");
-    if (newPrice === null || isNaN(newPrice)) return alert("Invalid price!");
+  const newPrice = prompt('Enter the new electricity price:');
+  if (newPrice === null || isNaN(newPrice)) return alert('Invalid price!');
 
-    try {
-        const response = await fetch("/api/prices", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ price: parseFloat(newPrice) })
-        });
+  try {
+    const response = await fetch('/api/prices', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ price: parseFloat(newPrice) }),
+    });
 
-        if (!response.ok) throw new Error("Failed to add new price");
+    if (!response.ok) throw new Error('Failed to add new price');
 
-        drawChart(); // Refresh chart
-    } catch (error) {
-        console.error("❌ Error adding new price:", error);
-    }
+    drawChart(); // Refresh chart
+  } catch (error) {
+    console.error('❌ Error adding new price:', error);
+  }
 }
 
 // 🔹 Function to delete the latest price
 async function deleteLatestPrice() {
-    if (!confirm("Are you sure you want to delete the latest price?")) return;
+  if (!confirm('Are you sure you want to delete the latest price?')) return;
 
-    try {
-        const response = await fetch("/api/prices/latest", { method: "DELETE" });
+  try {
+    const response = await fetch('/api/prices/latest', { method: 'DELETE' });
 
-        if (!response.ok) throw new Error("Failed to delete price");
+    if (!response.ok) throw new Error('Failed to delete price');
 
-        drawChart(); // Refresh chart
-    } catch (error) {
-        console.error("❌ Error deleting latest price:", error);
-    }
+    drawChart(); // Refresh chart
+  } catch (error) {
+    console.error('❌ Error deleting latest price:', error);
+  }
 }
 
 // 🔹 Event listeners for buttons
-document.getElementById("updatePrice").addEventListener("click", updateLatestPrice);
-document.getElementById("addPrice").addEventListener("click", addNewPrice);
-document.getElementById("deletePrice").addEventListener("click", deleteLatestPrice);
+document
+  .getElementById('updatePrice')
+  .addEventListener('click', updateLatestPrice);
+document.getElementById('addPrice').addEventListener('click', addNewPrice);
+document
+  .getElementById('deletePrice')
+  .addEventListener('click', deleteLatestPrice);
 
 async function drawChart() {
-    const data = await fetchData();
-    if (data.length === 0) return console.warn("⚠️ No data to display");
+  const data = await fetchData();
+  if (data.length === 0) return console.warn('⚠️ No data to display');
 
-    const timestamps = data.map(d => {
-        const date = new Date(d.timestamp);
-        if (isNaN(date.getTime())) {
-            console.warn("⚠️ Invalid date detected:", d.timestamp);
-            return "Invalid Date";
-        }
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    });
-
-    const prices = data.map(d => parseFloat(d.price).toFixed(2));
-
-    const canvas = document.getElementById("priceChart");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = 800;
-    canvas.height = 500;
-
-    const padding = 60;  
-    const width = canvas.width - padding * 2;
-    const height = canvas.height - padding * 2;
-
-    const maxPrice = Math.max(...prices);
-    const minPrice = Math.min(...prices);
-    const xStep = width / (timestamps.length - 1);
-
-    function getY(price) {
-        return canvas.height - padding - ((price - minPrice) / (maxPrice - minPrice)) * height;
+  const timestamps = data.map((d) => {
+    const date = new Date(d.timestamp);
+    if (isNaN(date.getTime())) {
+      console.warn('⚠️ Invalid date detected:', d.timestamp);
+      return 'Invalid Date';
     }
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  });
 
-    function getX(index) {
-        return padding + index * xStep;
-    }
+  const prices = data.map((d) => parseFloat(d.price).toFixed(2));
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const canvas = document.getElementById('priceChart');
+  const ctx = canvas.getContext('2d');
 
+  canvas.width = 800;
+  canvas.height = 500;
+
+  const padding = 60;
+  const width = canvas.width - padding * 2;
+  const height = canvas.height - padding * 2;
+
+  const maxPrice = Math.max(...prices);
+  const minPrice = Math.min(...prices);
+  const xStep = width / (timestamps.length - 1);
+
+  function getY(price) {
+    return (
+      canvas.height -
+      padding -
+      ((price - minPrice) / (maxPrice - minPrice)) * height
+    );
+  }
+
+  function getX(index) {
+    return padding + index * xStep;
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.beginPath();
+  ctx.moveTo(padding, canvas.height - padding);
+  ctx.lineTo(canvas.width - padding, canvas.height - padding);
+  ctx.moveTo(padding, canvas.height - padding);
+  ctx.lineTo(padding, padding);
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'blue';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < timestamps.length; i++) {
+    const x = getX(i);
+    const y = getY(prices[i]);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  for (let i = 0; i < timestamps.length; i++) {
+    const x = getX(i);
+    const y = getY(prices[i]);
+
+    ctx.fillStyle = 'red';
     ctx.beginPath();
-    ctx.moveTo(padding, canvas.height - padding);
-    ctx.lineTo(canvas.width - padding, canvas.height - padding);
-    ctx.moveTo(padding, canvas.height - padding);
-    ctx.lineTo(padding, padding);
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 2;
-    ctx.stroke();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
 
-    ctx.beginPath();
-    ctx.strokeStyle = "blue";
-    ctx.lineWidth = 2;
-    for (let i = 0; i < timestamps.length; i++) {
-        const x = getX(i);
-        const y = getY(prices[i]);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
+    ctx.fillStyle = '#000';
+    ctx.fillText(`$${prices[i]}`, x - 10, y - 10);
+  }
 
-    for (let i = 0; i < timestamps.length; i++) {
-        const x = getX(i);
-        const y = getY(prices[i]);
+  ctx.fillStyle = '#000';
+  ctx.font = '12px Arial';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
 
-        ctx.fillStyle = "red";
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fill();
+  const step = Math.ceil(timestamps.length / 10);
+  for (let i = 0; i < timestamps.length; i += step) {
+    const x = getX(i);
+    ctx.save();
+    ctx.translate(x, canvas.height - 20);
+    ctx.rotate(-Math.PI / 4);
+    ctx.fillText(timestamps[i], 0, 0);
+    ctx.restore();
+  }
 
-        ctx.fillStyle = "#000";
-        ctx.fillText(`$${prices[i]}`, x - 10, y - 10);
-    }
-
-    ctx.fillStyle = "#000";
-    ctx.font = "12px Arial";
-    ctx.textAlign = "right";  
-    ctx.textBaseline = "middle";
-
-    const step = Math.ceil(timestamps.length / 10);
-    for (let i = 0; i < timestamps.length; i += step) {
-        const x = getX(i);
-        ctx.save();
-        ctx.translate(x, canvas.height - 20);
-        ctx.rotate(-Math.PI / 4);
-        ctx.fillText(timestamps[i], 0, 0);
-        ctx.restore();
-    }
-
-   
-    ctx.fillStyle = "#000";
-    ctx.font = "14px Arial";  
-    ctx.textAlign = "right";  
-    ctx.fillText(`$${maxPrice.toFixed(2)}`, padding - 10, getY(maxPrice));
-    ctx.fillText(`$${minPrice.toFixed(2)}`, padding - 10, getY(minPrice));
+  ctx.fillStyle = '#000';
+  ctx.font = '14px Arial';
+  ctx.textAlign = 'right';
+  ctx.fillText(`$${maxPrice.toFixed(2)}`, padding - 10, getY(maxPrice));
+  ctx.fillText(`$${minPrice.toFixed(2)}`, padding - 10, getY(minPrice));
 }
 
-document.addEventListener("DOMContentLoaded", drawChart);
+document.addEventListener('DOMContentLoaded', drawChart);
