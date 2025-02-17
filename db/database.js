@@ -1,12 +1,22 @@
 import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
 
-const uri = 'mongodb://localhost:27017';
+dotenv.config();
+
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
 async function connectDB() {
-    await client.connect();
-    console.log('✅ Connected to MongoDB');
-    return client.db('miners_data'); 
+    try {
+        await client.connect();
+        console.log("✅ Successfully connected to MongoDB Atlas");
+        return client.db("miners_data"); 
+    } catch (error) {
+        console.error("❌ MongoDB Connection Error:", error);
+        process.exit(1);
+    }
 }
 
 export default connectDB;
+
+
