@@ -65,10 +65,10 @@ function attachFormListener() {
             ip: document.getElementById("ip").value,
             seat: document.getElementById("seat").value,
             model: document.getElementById("model").value,
-            workingMode: document.getElementById("workingMode").value,
+            workingMode: document.getElementById("workingMode").value, // ✅ 确保是 Normal/Sleep
             hashrate: parseFloat(document.getElementById("hashrate").value),
             status: document.getElementById("status").value,
-            hashboardStatus: document.getElementById("hashboardStatus").value,
+            hashboardStatus: document.getElementById("hashboardStatus").value, // ✅ 确保是 Good/Bad
             temperature: parseFloat(document.getElementById("temperature").value),
             fanSpeed: parseInt(document.getElementById("fanSpeed").value),
             customer: document.getElementById("customer").value,
@@ -133,8 +133,11 @@ async function fetchMinerDetails() {
     document.getElementById("fanSpeed").value = miner.fanSpeed || "";
     document.getElementById("customer").value = miner.customer || "";
     document.getElementById("miningPool").value = miner.miningPool || "";
-}
 
+    // ✅ 确保 Working Mode 和 Hashboard Status 选项正确
+    document.getElementById("workingMode").value = miner.workingMode || "Normal";
+    document.getElementById("hashboardStatus").value = miner.hashboardStatus || "Good";
+}
 
 // 更新矿机信息
 function attachUpdateListener() {
@@ -152,10 +155,14 @@ function attachUpdateListener() {
             ip: document.getElementById("ip").value.trim(),
             seat: document.getElementById("seat").value.trim(),
             model: document.getElementById("model").value.trim(),
+            workingMode: document.getElementById("workingMode").value, // ✅ 确保是 Normal/Sleep
             hashrate: parseFloat(document.getElementById("hashrate").value) || 0,
             status: document.getElementById("status").value.trim(),
+            hashboardStatus: document.getElementById("hashboardStatus").value, // ✅ 确保是 Good/Bad
             temperature: parseFloat(document.getElementById("temperature").value) || 0,
             fanSpeed: parseInt(document.getElementById("fanSpeed").value) || 0,
+            customer: document.getElementById("customer").value.trim(),
+            miningPool: document.getElementById("miningPool").value.trim(),
         };
 
         const response = await fetch(`/api/miners/${minerId}`, {
@@ -167,6 +174,4 @@ function attachUpdateListener() {
         if (response.ok) window.location.href = "index.html";
     });
 }
-
-
 

@@ -54,7 +54,7 @@ async function drawChart() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // 绘制折线
+    // 先画折线，再画点
     ctx.beginPath();
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
@@ -68,6 +68,13 @@ async function drawChart() {
         } else {
             ctx.lineTo(x, y);
         }
+    }
+    ctx.stroke(); // 画折线
+
+    // 画点
+    for (let i = 0; i < timestamps.length; i++) {
+        const x = getX(i);
+        const y = getY(prices[i]);
 
         ctx.fillStyle = "red";
         ctx.beginPath();
@@ -77,7 +84,6 @@ async function drawChart() {
         ctx.fillStyle = "#000";
         ctx.fillText(`$${prices[i]}`, x - 10, y - 10);
     }
-    ctx.stroke();
 
     // 绘制时间标签
     ctx.fillStyle = "#000";
@@ -94,5 +100,3 @@ async function drawChart() {
 
 // 运行绘图
 document.addEventListener("DOMContentLoaded", drawChart);
-
-

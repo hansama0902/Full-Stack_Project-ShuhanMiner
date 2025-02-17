@@ -1,0 +1,32 @@
+body {
+    font-family: "Arial", sans-serif;
+}
+
+/* 让 canvas 居中并带阴影 */
+canvas {
+    max-width: 100%;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 美化标题 */
+h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 让 card 看起来更专业 */
+.card {
+    max-width: 700px;
+    margin: auto;
+    border-radius: 15px;
+}
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #343a40;
+    color: white;
+    margin-top: 20px;
+  }
