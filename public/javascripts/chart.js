@@ -2,7 +2,7 @@
 
 async function fetchData() {
     try {
-        const response = await fetch("/api/prices"); // ✅ Fetch from API
+        const response = await fetch("/api/prices"); 
         if (!response.ok) throw new Error("Server returned an error");
         const data = await response.json();
         return data;
@@ -93,7 +93,7 @@ async function drawChart() {
     canvas.width = 800;
     canvas.height = 500;
 
-    const padding = 60;  // ✅ 增加 padding 以便 Y 轴标签有足够的空间
+    const padding = 60;  
     const width = canvas.width - padding * 2;
     const height = canvas.height - padding * 2;
 
@@ -111,7 +111,6 @@ async function drawChart() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // ✅ 画坐标轴
     ctx.beginPath();
     ctx.moveTo(padding, canvas.height - padding);
     ctx.lineTo(canvas.width - padding, canvas.height - padding);
@@ -121,7 +120,6 @@ async function drawChart() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // ✅ 画折线
     ctx.beginPath();
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
@@ -133,7 +131,6 @@ async function drawChart() {
     }
     ctx.stroke();
 
-    // ✅ 画点
     for (let i = 0; i < timestamps.length; i++) {
         const x = getX(i);
         const y = getY(prices[i]);
@@ -147,7 +144,6 @@ async function drawChart() {
         ctx.fillText(`$${prices[i]}`, x - 10, y - 10);
     }
 
-    // ✅ 画 X 轴标签（减少显示数量 + 旋转 + 下移）
     ctx.fillStyle = "#000";
     ctx.font = "12px Arial";
     ctx.textAlign = "right";  
@@ -163,13 +159,12 @@ async function drawChart() {
         ctx.restore();
     }
 
-    // ✅ 画 Y 轴最大/最小价格标签（向左偏移 10px，提高清晰度）
+   
     ctx.fillStyle = "#000";
-    ctx.font = "14px Arial";  // ✅ 字体更大，清晰可见
-    ctx.textAlign = "right";  // ✅ 让价格对齐 Y 轴
+    ctx.font = "14px Arial";  
+    ctx.textAlign = "right";  
     ctx.fillText(`$${maxPrice.toFixed(2)}`, padding - 10, getY(maxPrice));
     ctx.fillText(`$${minPrice.toFixed(2)}`, padding - 10, getY(minPrice));
 }
 
-// ✅ 初始化绘图
 document.addEventListener("DOMContentLoaded", drawChart);

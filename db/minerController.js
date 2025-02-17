@@ -1,6 +1,6 @@
 import connectDB from "./database.js";
 
-// **获取所有矿机**
+
 async function listMiners(req, res) {
     try {
         const db = await connectDB();
@@ -12,7 +12,7 @@ async function listMiners(req, res) {
     }
 }
 
-// **创建矿机**
+
 async function createMiner(req, res) {
     try {
         const db = await connectDB();
@@ -22,9 +22,9 @@ async function createMiner(req, res) {
             return res.status(400).json({ error: "缺少必填字段: ip 或 model" });
         }
 
-        // 直接使用字符串作为 _id
+
         if (!newMiner._id) {
-            newMiner._id = `miner_${Date.now()}`; // 使用时间戳生成唯一字符串 ID
+            newMiner._id = `miner_${Date.now()}`; 
         }
 
         await db.collection("miners").insertOne(newMiner);
@@ -35,7 +35,7 @@ async function createMiner(req, res) {
     }
 }
 
-// **删除矿机**
+
 async function removeMiner(req, res) {
     try {
         const db = await connectDB();
@@ -54,7 +54,7 @@ async function removeMiner(req, res) {
     }
 }
 
-// **更新矿机**
+
 async function updateMiner(req, res) {
     try {
         const db = await connectDB();
@@ -77,7 +77,7 @@ async function updateMiner(req, res) {
     }
 }
 
-// **获取单个矿机信息**
+
 async function getMinerById(req, res) {
     try {
         const db = await connectDB();
@@ -96,7 +96,6 @@ async function getMinerById(req, res) {
     }
 }
 
-// **统一导出所有方法**
 export { listMiners, createMiner, removeMiner, updateMiner, getMinerById };
 
 
