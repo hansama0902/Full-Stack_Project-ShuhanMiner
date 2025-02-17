@@ -72,18 +72,28 @@ document.getElementById("updatePrice").addEventListener("click", updateLatestPri
 document.getElementById("addPrice").addEventListener("click", addNewPrice);
 document.getElementById("deletePrice").addEventListener("click", deleteLatestPrice);
 
-// 🔹 Draw Chart
 async function drawChart() {
     const data = await fetchData();
     if (data.length === 0) return console.warn("⚠️ No data to display");
 
-    const timestamps = data.map(d => new Date(d.timestamp).toLocaleTimeString());
-    const prices = data.map(d => d.price);
+    const timestamps = data.map(d => {
+        const date = new Date(d.timestamp);
+        if (isNaN(date.getTime())) {
+            console.warn("⚠️ Invalid date detected:", d.timestamp);
+            return "Invalid Date";
+        }
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    });
+
+    const prices = data.map(d => parseFloat(d.price).toFixed(2));
 
     const canvas = document.getElementById("priceChart");
     const ctx = canvas.getContext("2d");
 
-    const padding = 50;
+    canvas.width = 800;
+    canvas.height = 500;
+
+    const padding = 60;  // ✅ 增加 padding 以便 Y 轴标签有足够的空间
     const width = canvas.width - padding * 2;
     const height = canvas.height - padding * 2;
 
@@ -101,7 +111,7 @@ async function drawChart() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Axes
+    // ✅ 画坐标轴
     ctx.beginPath();
     ctx.moveTo(padding, canvas.height - padding);
     ctx.lineTo(canvas.width - padding, canvas.height - padding);
@@ -111,7 +121,7 @@ async function drawChart() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Draw Line
+    // ✅ 画折线
     ctx.beginPath();
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
@@ -123,7 +133,7 @@ async function drawChart() {
     }
     ctx.stroke();
 
-    // Draw Points
+    // ✅ 画点
     for (let i = 0; i < timestamps.length; i++) {
         const x = getX(i);
         const y = getY(prices[i]);
@@ -132,20 +142,34 @@ async function drawChart() {
         ctx.beginPath();
         ctx.arc(x, y, 4, 0, Math.PI * 2);
         ctx.fill();
+
         ctx.fillStyle = "#000";
         ctx.fillText(`$${prices[i]}`, x - 10, y - 10);
     }
 
-    // Draw Labels
+    // ✅ 画 X 轴标签（减少显示数量 + 旋转 + 下移）
     ctx.fillStyle = "#000";
     ctx.font = "12px Arial";
-    for (let i = 0; i < timestamps.length; i++) {
-        ctx.fillText(timestamps[i], getX(i) - 20, canvas.height - 30);
+    ctx.textAlign = "right";  
+    ctx.textBaseline = "middle";
+
+    const step = Math.ceil(timestamps.length / 10);
+    for (let i = 0; i < timestamps.length; i += step) {
+        const x = getX(i);
+        ctx.save();
+        ctx.translate(x, canvas.height - 20);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillText(timestamps[i], 0, 0);
+        ctx.restore();
     }
-    ctx.fillText(`$${maxPrice}`, padding - 40, getY(maxPrice));
-    ctx.fillText(`$${minPrice}`, padding - 40, getY(minPrice));
+
+    // ✅ 画 Y 轴最大/最小价格标签（向左偏移 10px，提高清晰度）
+    ctx.fillStyle = "#000";
+    ctx.font = "14px Arial";  // ✅ 字体更大，清晰可见
+    ctx.textAlign = "right";  // ✅ 让价格对齐 Y 轴
+    ctx.fillText(`$${maxPrice.toFixed(2)}`, padding - 10, getY(maxPrice));
+    ctx.fillText(`$${minPrice.toFixed(2)}`, padding - 10, getY(minPrice));
 }
 
-// Initialize Chart
+// ✅ 初始化绘图
 document.addEventListener("DOMContentLoaded", drawChart);
-
