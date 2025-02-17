@@ -1,24 +1,81 @@
-// chart.js - 负责从 API 获取数据并绘制图表
+// chart.js - Handles fetching data and rendering the chart
 
 async function fetchData() {
     try {
-        const response = await fetch("/api/prices"); // ✅ 修正 API 路径
-        if (!response.ok) throw new Error("服务器返回错误");
+        const response = await fetch("/api/prices"); // ✅ Fetch from API
+        if (!response.ok) throw new Error("Server returned an error");
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("❌ 获取数据失败:", error);
+        console.error("❌ Failed to fetch data:", error);
         return [];
     }
 }
-// 绘制线性图
+
+// 🔹 Function to update the latest price
+async function updateLatestPrice() {
+    const newPrice = prompt("Enter the new electricity price:");
+    if (newPrice === null || isNaN(newPrice)) return alert("Invalid price!");
+
+    try {
+        const response = await fetch("/api/prices/latest", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ price: parseFloat(newPrice) })
+        });
+
+        if (!response.ok) throw new Error("Failed to update price");
+
+        drawChart(); // Refresh chart
+    } catch (error) {
+        console.error("❌ Error updating price:", error);
+    }
+}
+
+// 🔹 Function to add a new price
+async function addNewPrice() {
+    const newPrice = prompt("Enter the new electricity price:");
+    if (newPrice === null || isNaN(newPrice)) return alert("Invalid price!");
+
+    try {
+        const response = await fetch("/api/prices", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ price: parseFloat(newPrice) })
+        });
+
+        if (!response.ok) throw new Error("Failed to add new price");
+
+        drawChart(); // Refresh chart
+    } catch (error) {
+        console.error("❌ Error adding new price:", error);
+    }
+}
+
+// 🔹 Function to delete the latest price
+async function deleteLatestPrice() {
+    if (!confirm("Are you sure you want to delete the latest price?")) return;
+
+    try {
+        const response = await fetch("/api/prices/latest", { method: "DELETE" });
+
+        if (!response.ok) throw new Error("Failed to delete price");
+
+        drawChart(); // Refresh chart
+    } catch (error) {
+        console.error("❌ Error deleting latest price:", error);
+    }
+}
+
+// 🔹 Event listeners for buttons
+document.getElementById("updatePrice").addEventListener("click", updateLatestPrice);
+document.getElementById("addPrice").addEventListener("click", addNewPrice);
+document.getElementById("deletePrice").addEventListener("click", deleteLatestPrice);
+
+// 🔹 Draw Chart
 async function drawChart() {
     const data = await fetchData();
-
-    if (data.length === 0) {
-        console.warn("⚠️ 无数据可展示");
-        return;
-    }
+    if (data.length === 0) return console.warn("⚠️ No data to display");
 
     const timestamps = data.map(d => new Date(d.timestamp).toLocaleTimeString());
     const prices = data.map(d => d.price);
@@ -44,7 +101,7 @@ async function drawChart() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 画坐标轴
+    // Draw Axes
     ctx.beginPath();
     ctx.moveTo(padding, canvas.height - padding);
     ctx.lineTo(canvas.width - padding, canvas.height - padding);
@@ -54,24 +111,19 @@ async function drawChart() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // 先画折线，再画点
+    // Draw Line
     ctx.beginPath();
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 2;
-
     for (let i = 0; i < timestamps.length; i++) {
         const x = getX(i);
         const y = getY(prices[i]);
-
-        if (i === 0) {
-            ctx.moveTo(x, y);
-        } else {
-            ctx.lineTo(x, y);
-        }
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
     }
-    ctx.stroke(); // 画折线
+    ctx.stroke();
 
-    // 画点
+    // Draw Points
     for (let i = 0; i < timestamps.length; i++) {
         const x = getX(i);
         const y = getY(prices[i]);
@@ -80,23 +132,20 @@ async function drawChart() {
         ctx.beginPath();
         ctx.arc(x, y, 4, 0, Math.PI * 2);
         ctx.fill();
-
         ctx.fillStyle = "#000";
         ctx.fillText(`$${prices[i]}`, x - 10, y - 10);
     }
 
-    // 绘制时间标签
+    // Draw Labels
     ctx.fillStyle = "#000";
     ctx.font = "12px Arial";
     for (let i = 0; i < timestamps.length; i++) {
-        const x = getX(i);
-        ctx.fillText(timestamps[i], x - 20, canvas.height - 30);
+        ctx.fillText(timestamps[i], getX(i) - 20, canvas.height - 30);
     }
-
-    ctx.fillStyle = "#000";
     ctx.fillText(`$${maxPrice}`, padding - 40, getY(maxPrice));
     ctx.fillText(`$${minPrice}`, padding - 40, getY(minPrice));
 }
 
-// 运行绘图
+// Initialize Chart
 document.addEventListener("DOMContentLoaded", drawChart);
+
