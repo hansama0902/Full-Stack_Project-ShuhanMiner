@@ -1,3 +1,4 @@
+import { setupDropdowns } from './dropdown.js';
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('machine-list')) {
     fetchMiners();
@@ -168,3 +169,6 @@ function attachUpdateListener() {
     if (response.ok) window.location.href = 'index.html';
   });
 }
+document.addEventListener('DOMContentLoaded', () => {
+  setupDropdowns();
+});

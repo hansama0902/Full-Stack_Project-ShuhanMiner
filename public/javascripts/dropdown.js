@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+export function setupDropdowns() {
   console.log('✅ Dropdown script loaded');
 
   const actionsDropdown = document.getElementById('actions-dropdown');
@@ -14,18 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
       event.stopPropagation();
 
       actionsMenu.classList.toggle('d-none');
-
-      if (!actionsMenu.classList.contains('d-none')) {
-        actionsMenu.style.display = 'block';
-      } else {
-        actionsMenu.style.display = 'none';
-      }
+      actionsMenu.style.display = actionsMenu.classList.contains('d-none')
+        ? 'none'
+        : 'block';
 
       console.log('✅ Actions Menu Toggled:', actionsMenu.style.display);
     });
   } else {
     console.error("❌ Error: 'actions-dropdown' or 'actions-menu' not found.");
   }
+
   if (addMachineToggle && addMachineContainer) {
     console.log('✅ Add Machine Button Found');
 
@@ -45,4 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
       "❌ Error: 'toggle-add-machine' or 'add-machine-container' not found."
     );
   }
-});
+}
