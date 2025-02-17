@@ -6,15 +6,14 @@
 
 ## Class Link
 
-[Class Page](https://johnguerra.co/classes/webDevelopment_spring_2025/)
+CS5610 Web_Development [Course Page](https://johnguerra.co/classes/webDevelopment_spring_2025/)
+
+Instructor: John Alexis Guerra Gómez [Profile](https://johnguerra.co/)
+
 
 ## Project Objective
 
-1. **Enhance Frontend Skills**:
-   - Improve proficiency in **HTML5**, **CSS3**, and **JavaScript**.
-2. **Introduce Blockchain Mining Machines**:
-   - Share insights into the blockchain industry with a focus on mining machines, drawing from my prior work experience.
-
+Apply the concepts learned to build a basic backend application using Node.js, Express 5, and MongoDB, along with an HTML5 frontend, and complete the deployment of the web database. Develop the Mining Machine Monitoring and Management System to make up for the regrets of the working period.
 ## Project Screenshot
 
 ![Project Screenshot](https://raw.githubusercontent.com/hansama0902/Full-Stack_Project-ShuhanMiner/refs/heads/main/screenshot/screen1.png)
