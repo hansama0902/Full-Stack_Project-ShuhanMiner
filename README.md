@@ -98,8 +98,7 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 
 ### View the project
 
-Visit the live project at: [Mining Management](full-stack-project-shuhan-miner.vercel.app
-)
+Visit the project at: https://full-stack-project-shuhan-miner.vercel.app
 
 ## Resourse
 
