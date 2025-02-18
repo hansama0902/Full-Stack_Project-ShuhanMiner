@@ -87,7 +87,7 @@ Visit the live project at: [MineStore Project](https://hansama0902.github.io/Web
 
 ## Usage of GenAI  
 
-1. **Creating Charts Without External JS Using ChatGPT 4o**
+**1. Creating Charts Without External JS Using ChatGPT 4o**
 
 While developing my project, I needed to create charts for data visualization. However, due to project constraints, I could not use external JavaScript libraries like Chart.js or D3.js.
 
