@@ -85,10 +85,9 @@ Visit the live project at: [Mining Management](https://full-stack-project-shuhan
 
 ## Resourse
 
-1.[Video](https://youtu.be/3nr9eM7YlWA) 
+1.[Video](https://youtu.be/3nr9eM7YlWA)  
 2.[Design Doc](https://github.com/hansama0902/Full-Stack_Project-ShuhanMiner/blob/main/docs/Design%20Document.pdf)  
-3.[Slides](https://docs.google.com/presentation/d/1M8-rw_8FNOXsD08S19G1zejjg_alLBsCtnAvHSIhPYI/edit?usp=sharing)
-
+3.[Slides](https://docs.google.com/presentation/d/1sTtyNgll-swiHw4ba4af5vhOjuoBw3gM/edit?usp=sharing&ouid=107145337075758185002&rtpof=true&sd=true) 
 ## Usage of GenAI
 
 **1. Creating Charts Without External JS Using ChatGPT 4o**
