@@ -86,7 +86,7 @@ Visit the live project at: [MineStore Project](https://hansama0902.github.io/Web
 ## Resourse
 
 1.[Video](https://youtu.be/-VIRZhJZJcA)  
-2.[Design Doc](https://docs.google.com/document/d/1sj8mXe9F7O5z7Av_7abQxXlFllzEUQj8a6i96UcBgH4/edit?usp=sharing)  
+2.[Design Doc](https://github.com/hansama0902/Full-Stack_Project-ShuhanMiner/blob/main/docs/Design%20Document.pdf)  
 3.[Slides](https://docs.google.com/presentation/d/1M8-rw_8FNOXsD08S19G1zejjg_alLBsCtnAvHSIhPYI/edit?usp=sharing)
 
 ## Usage of GenAI
