@@ -95,7 +95,7 @@ To solve this issue, I used ChatGPT 4o to generate pure JavaScript solutions usi
 
 Example Solution:
 Instead of using Chart.js, I asked ChatGPT to generate a custom vanilla JavaScript chart:
-   
+```bash   
 export async function drawChart() {
   const data = await fetchData();
   if (data.length === 0) return console.warn('⚠️ No data to display');
@@ -187,14 +187,8 @@ export async function drawChart() {
     getY(maxPrice)
   );
   ctx.fillText(`Lowest: $${minPrice.toFixed(2)}`, padding - 15, getY(minPrice));
-}```bash
-
-body,
-html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
+
 ```
 
 By using ChatGPT 4o, I was able to generate pure JavaScript charts using the <canvas> API, successfully avoiding external dependencies while still achieving dynamic and interactive data visualization.
