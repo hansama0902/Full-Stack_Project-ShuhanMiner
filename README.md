@@ -87,11 +87,107 @@ Visit the live project at: [MineStore Project](https://hansama0902.github.io/Web
 
 ## Usage of GenAI
 
-1. Fixing White Border Issue of home page using ChatGPT 4o  
-   When reducing the size of the webpage, a white border may appear around the `Nav` section or `Hero` section.  
-   To address this issue, use the following CSS styles:
+1. Creating Charts Without External JS Using ChatGPT 4o
 
-```bash
+While developing my project, I needed to create charts for data visualization. However, due to project constraints, I could not use external JavaScript libraries like Chart.js or D3.js.
+
+To solve this issue, I used ChatGPT 4o to generate pure JavaScript solutions using the <canvas> element and vanilla JS, ensuring the charts were drawn dynamically without relying on external dependencies.
+
+Example Solution:
+Instead of using Chart.js, I asked ChatGPT to generate a custom vanilla JavaScript chart:
+   
+export async function drawChart() {
+  const data = await fetchData();
+  if (data.length === 0) return console.warn('⚠️ No data to display');
+
+  const timestamps = data.map((d) => {
+    const date = new Date(d.timestamp);
+    return isNaN(date.getTime())
+      ? 'Invalid Date'
+      : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  });
+
+  const prices = data.map((d) => parseFloat(d.price));
+
+  const canvas = document.getElementById('priceChart');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = 800;
+  canvas.height = 500;
+
+  const padding = 60;
+  const width = canvas.width - padding * 2;
+  const height = canvas.height - padding * 2;
+
+  const maxPrice = Math.max(...prices);
+  const minPrice = Math.min(...prices);
+  const xStep = width / (timestamps.length - 1);
+
+  function getY(price) {
+    return (
+      canvas.height -
+      padding -
+      ((price - minPrice) / (maxPrice - minPrice)) * height
+    );
+  }
+
+  function getX(index) {
+    return padding + index * xStep;
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.moveTo(padding, canvas.height - padding);
+  ctx.lineTo(canvas.width - padding, canvas.height - padding); 
+  ctx.moveTo(padding, canvas.height - padding);
+  ctx.lineTo(padding, padding); 
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'blue';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < timestamps.length; i++) {
+    const x = getX(i);
+    const y = getY(prices[i]);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  for (let i = 0; i < timestamps.length; i++) {
+    const x = getX(i);
+    const y = getY(prices[i]);
+
+    ctx.fillStyle = 'red';
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.fillStyle = '#000';
+  ctx.font = '12px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  const step = Math.ceil(timestamps.length / 10);
+  for (let i = 0; i < timestamps.length; i += step) {
+    const x = getX(i);
+    ctx.fillText(timestamps[i], x, canvas.height - 40);
+  }
+  ctx.fillStyle = 'black';
+  ctx.font = '14px Arial';
+  ctx.textAlign = 'right';
+  ctx.fillText(
+    `Highest: $${maxPrice.toFixed(2)}`,
+    padding - 15,
+    getY(maxPrice)
+  );
+  ctx.fillText(`Lowest: $${minPrice.toFixed(2)}`, padding - 15, getY(minPrice));
+}```bash
 
 body,
 html {
@@ -101,26 +197,8 @@ html {
 }
 ```
 
-Issue Not Resolved  
-2. How to introduce Bitcoin Operation to someone outside the industry in simple terms using ChatGPT 4o
+By using ChatGPT 4o, I was able to generate pure JavaScript charts using the <canvas> API, successfully avoiding external dependencies while still achieving dynamic and interactive data visualization.
 
-```bash
-1. What is Bitcoin?
-2. How does Bitcoin work?
-Bitcoin operates in a few simple steps:
-(1) The Blockchain: Bitcoin's Record-Keeping System
-(2) Transactions
-Sending Bitcoin is like sending a digital message, but the message is Bitcoin.
-(3) Mining
-Bitcoin relies on a process called "mining" to verify transactions and secure the network.
-3. Why is Bitcoin Important?
-Bitcoin has some unique features:
-Decentralized,
-Secure,
-Globa.
-```
-
-The explanation was too technical and not suitable for inclusion in my document or video. So, I simply shared a brief overview of my background and did not use it.
 
 ## License
 
