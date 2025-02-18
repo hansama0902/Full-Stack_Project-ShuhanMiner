@@ -22,7 +22,13 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 ![Project Screenshot](https://raw.githubusercontent.com/hansama0902/Full-Stack_Project-ShuhanMiner/refs/heads/main/screenshot/screen4.png)
 
 ---
+### Prerequisites  
 
+- Node.js (v14 or higher)
+- mongodb Atlas
+- npm 
+- Git
+- Vercel
 ## Technologies Used
 
 - **HTML5**
@@ -78,6 +84,18 @@ Apply the concepts learned to build a basic backend application using Node.js, E
    ```
 
    ***
+## API Documentation  
+### Miners  
+- GET - Get all miners  
+- POST  Create a new miner  
+- PUT   Update a new miner  
+- DELETE   Delete a miner  
+
+### Prices  
+- GET - Get all electricity prices  
+- POST  Add new electricity prices  
+- PUT   Update the latest electricity price  
+- DELETE   Delete the latest electricity price  
 
 ### View the project
 
