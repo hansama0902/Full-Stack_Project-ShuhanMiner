@@ -87,15 +87,15 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 ## API Documentation  
 ### Miners  
 - GET - Get all miners  
-- POST  Create a new miner  
-- PUT   Update a new miner  
-- DELETE   Delete a miner  
+- POST - Create a new miner  
+- PUT  - Update a new miner  
+- DELETE -  Delete a miner  
 
 ### Prices  
 - GET - Get all electricity prices  
-- POST  Add new electricity prices  
-- PUT   Update the latest electricity price  
-- DELETE   Delete the latest electricity price  
+- POST - Add new electricity prices  
+- PUT  - Update the latest electricity price  
+- DELETE  - Delete the latest electricity price  
 
 ### View the project
 
