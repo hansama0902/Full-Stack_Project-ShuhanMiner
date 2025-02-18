@@ -1,4 +1,3 @@
-// price.js - 负责更新、添加和删除电价，并导入 `drawChart()`
 import { drawChart } from './chart.js';
 
 async function updateLatestPrice() {
@@ -53,7 +52,6 @@ async function deleteLatestPrice() {
   }
 }
 
-// 🔹 事件监听器
 document
   .getElementById('updatePrice')
   .addEventListener('click', updateLatestPrice);
@@ -62,5 +60,4 @@ document
   .getElementById('deletePrice')
   .addEventListener('click', deleteLatestPrice);
 
-// **页面加载后绘制图表**
 document.addEventListener('DOMContentLoaded', drawChart);

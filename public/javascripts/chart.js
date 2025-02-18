@@ -1,5 +1,3 @@
-// chart.js - 负责绘制电价走势图
-
 export async function fetchData() {
   try {
     const response = await fetch('/api/prices');
@@ -54,17 +52,15 @@ export async function drawChart() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // 画坐标轴
   ctx.beginPath();
   ctx.moveTo(padding, canvas.height - padding);
-  ctx.lineTo(canvas.width - padding, canvas.height - padding); // X 轴
+  ctx.lineTo(canvas.width - padding, canvas.height - padding);
   ctx.moveTo(padding, canvas.height - padding);
-  ctx.lineTo(padding, padding); // Y 轴
+  ctx.lineTo(padding, padding);
   ctx.strokeStyle = '#000';
   ctx.lineWidth = 2;
   ctx.stroke();
 
-  // 画数据线
   ctx.beginPath();
   ctx.strokeStyle = 'blue';
   ctx.lineWidth = 2;
@@ -76,7 +72,6 @@ export async function drawChart() {
   }
   ctx.stroke();
 
-  // 画数据点
   for (let i = 0; i < timestamps.length; i++) {
     const x = getX(i);
     const y = getY(prices[i]);
@@ -87,7 +82,6 @@ export async function drawChart() {
     ctx.fill();
   }
 
-  // **优化 X 轴时间显示**
   ctx.fillStyle = '#000';
   ctx.font = '12px Arial';
   ctx.textAlign = 'center';
@@ -99,7 +93,6 @@ export async function drawChart() {
     ctx.fillText(timestamps[i], x, canvas.height - 40);
   }
 
-  // **在 Y 轴上标注最高价和最低价**
   ctx.fillStyle = 'black';
   ctx.font = '14px Arial';
   ctx.textAlign = 'right';

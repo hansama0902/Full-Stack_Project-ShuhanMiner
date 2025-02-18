@@ -94,7 +94,11 @@ function attachEventListeners() {
   document.querySelectorAll('.delete-machine').forEach((button) => {
     button.addEventListener('click', async (event) => {
       const minerId = event.target.getAttribute('data-id');
-      if (!minerId || !confirm('⚠️ 确定要删除这台矿机吗？')) return;
+      if (
+        !minerId ||
+        !confirm('⚠️ Are you sure you want to delete this miner?')
+      )
+        return;
 
       await fetch(`/api/miners/${minerId}`, { method: 'DELETE' });
       fetchMiners();
