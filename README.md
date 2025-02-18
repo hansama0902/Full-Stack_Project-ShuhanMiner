@@ -67,11 +67,11 @@ Apply the concepts learned to build a basic backend application using Node.js, E
    Replace your_mongodb_connection_string with your MongoDB Atlas URI.
 
 5.**Run the Project Locally**
-Start the backend server:
- ```bash
-   npm start
-   ```
----
+   Start the backend server:
+    ```bash
+      npm start
+      ```
+   ---
 
 ### View the project
 
