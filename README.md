@@ -27,9 +27,13 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 - **HTML5**
 - **CSS3**
 - **JavaScript**
-- **GitHub Pages**
+- **Node.js**
+- **Express**
+- **MongoDB**
+- **MongoDB Atlas**
 - **Bootstrap 5**
 - **ESLint6 & Prettier for Code Quality**
+- **Vercel**
 
 ---
 
@@ -38,39 +42,35 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/hansama0902/Web-Developmen_Miner-Store-Homepage_Project1.git
+   git clone https://github.com/hansama0902/Full-Stack_Project-ShuhanMiner.git
    ```
 
 2. **Navigate to the Project Directory**
 
    ```bash
-   cd Web-Developmen_MineMarket_Project1
+   cd Full-Stack_Project-ShuhanMiner
    ```
 
 3. **Install Dependencies (if applicable)**
-   If the project requires Node.js dependencies, install them by running:
+   This project requires Node.js dependencies. Install them by running:
 
    ```bash
    npm install
    ```
 
-4. **Run the Project Locally**
-
-   #### Option 1: Using `http-server` (Node.js-based)
-
+4. **Set Up Environment Variables**
+   Create a .env file in the root directory and add the following environment variables:
    ```bash
-   npm install -g http-server
-   http-server .
+   MONGO_URI=your_mongodb_connection_string
+   PORT=5000
    ```
+   Replace your_mongodb_connection_string with your MongoDB Atlas URI.
 
-   Open the URL provided in the terminal (e.g., `http://127.0.0.1:8080/`) in your web browser.
-
-   #### Option 2: Using Live Server (VS Code Extension)
-
-   1. Install the "Live Server" extension in VS Code.
-   2. Right-click on `index.html` in the file explorer.
-   3. Select **"Open with Live Server"**.
-
+5.**Run the Project Locally**
+Start the backend server:
+ ```bash
+   npm start
+   ```
 ---
 
 ### View the project
@@ -83,22 +83,6 @@ Visit the live project at: [MineStore Project](https://hansama0902.github.io/Web
 2.[Design Doc](https://docs.google.com/document/d/1sj8mXe9F7O5z7Av_7abQxXlFllzEUQj8a6i96UcBgH4/edit?usp=sharing)  
 3.[Slides](https://docs.google.com/presentation/d/1M8-rw_8FNOXsD08S19G1zejjg_alLBsCtnAvHSIhPYI/edit?usp=sharing)
 
-## Image Sources
-
-1. **[Bitmain Official Website](https://www.bitmain.com/)**  
-   Images are used to showcase Bitmain products.
-
-2. **[Canaan Creative Official Website](https://www.canaan-creative.com/)**  
-   Images are used to describe Canaan creative devices.
-
-3. **[WhatsMiner Official Website](https://www.whatsminer.com/)**  
-   Images are used to illustrate WhatsMiner mining equipment.
-
-## Creative addition
-
-1.  "+" and "-" buttons for adjusting the quantity of machines.
-2.  Hero Section -- Clicking the image redirects to the Products section.
-3.  Shuhan Handmade 🤔 at footer.
 
 ## Usage of GenAI
 
