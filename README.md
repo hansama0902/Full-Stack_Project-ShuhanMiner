@@ -70,7 +70,6 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 
    ```bash
    MONGO_URI=your_mongodb_connection_string
-   PORT=5000
    ```
 
    Replace your_mongodb_connection_string with your MongoDB Atlas URI.
