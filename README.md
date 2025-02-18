@@ -44,7 +44,7 @@ Apply the concepts learned to build a basic backend application using Node.js, E
 
 ---
 
-### Steps to Run the Project Locally
+### Instructions to build
 
 1. **Clone the Repository**
 
